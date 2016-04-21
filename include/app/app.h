@@ -3,6 +3,7 @@
 
 // local
 #include "app/appcfg.h"
+#include "ui/window.h"
 
 namespace IronVein
 {
@@ -11,6 +12,8 @@ namespace IronVein
 		class App
 		{
 			AppCfg _app_cfg;
+
+			UI::Window _main_window;
 
 		public:
 			App();

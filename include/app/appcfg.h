@@ -13,10 +13,10 @@ namespace IronVein
 	{
 		struct AppCfg
 		{
-			std::string data_directory;
+			std::string data_directory = "data";
 
-			u16 default_window_width;
-			u16 default_window_height;
+			u16 default_window_width = 800;
+			u16 default_window_height = 600;
 		};
 	}
 }
