@@ -1,6 +1,6 @@
 include_rules
 
-INCLUDES=-I../include -ISFML/include
+INCLUDES=-I../include -ISFML/include -IGLM/include
 
 : foreach app/*.cpp		|> !cpp_obj |>
 : foreach game/*.cpp	|> !cpp_obj |>
