@@ -21,6 +21,11 @@ namespace IronVein
 			this->_internal.setVisible(false);
 		}
 
+		void Window::setTitle(std::string title)
+		{
+			this->_internal.setTitle(title);
+		}
+
 		void Window::setEnabled(bool enabled)
 		{
 			Util::output("Enabling Window instance");

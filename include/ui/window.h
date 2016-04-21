@@ -9,6 +9,7 @@
 
 // standard
 #include "vector"
+#include "string"
 
 namespace IronVein
 {
@@ -23,6 +24,7 @@ namespace IronVein
 			void init(u16 width, u16 height);
 			void close();
 
+			void setTitle(std::string title);
 			void setEnabled(bool enabled = true);
 			bool isOpen();
 

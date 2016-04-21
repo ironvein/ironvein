@@ -5,7 +5,7 @@
 #include "app/appcfg.h"
 #include "ui/window.h"
 #include "state/gamestate.h"
-#include "ui/renderer.h"
+#include "ui/interface.h"
 
 namespace IronVein
 {
@@ -18,7 +18,7 @@ namespace IronVein
 
 			State::GameState _game_state;
 			UI::Window _main_window;
-			UI::Renderer _renderer;
+			UI::Interface _interface;
 
 		public:
 			App();
