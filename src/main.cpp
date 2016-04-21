@@ -1,8 +1,13 @@
+// local
+#include "app/app.h"
+
+// standard
 #include "iostream"
 
-int main()
+int main(int argc, char* argv[])
 {
-	std::cout << "Hello, World!" << std::endl;
+	IronVein::App::App default_app;
+	default_app.init(argc, argv);
 
-	return 0;
+	return default_app.run();
 }

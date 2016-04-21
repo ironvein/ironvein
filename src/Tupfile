@@ -2,6 +2,7 @@ include_rules
 
 INCLUDES=-I../include -ISFML/include
 
+: foreach app/*.cpp		|> !cpp_obj |>
 : foreach game/*.cpp	|> !cpp_obj |>
 : foreach ui/*.cpp		|> !cpp_obj |>
 : foreach util/*.cpp	|> !cpp_obj |>
