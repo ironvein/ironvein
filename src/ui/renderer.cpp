@@ -18,7 +18,7 @@ namespace IronVein
 
 		void Renderer::renderToWindow(State::GameState& game_state, Window& window)
 		{
-			window.clear(sf::Color(200, 230, 255));
+			window.getInternal().clear(sf::Color(200, 230, 255));
 		}
 	}
 }

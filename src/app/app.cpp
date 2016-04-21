@@ -46,7 +46,7 @@ namespace IronVein
 				}
 
 				this->_renderer.renderToWindow(this->_game_state, this->_main_window);
-				this->_main_window.display();
+				this->_main_window.update();
 			}
 
 			return 0;

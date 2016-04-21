@@ -29,8 +29,7 @@ namespace IronVein
 			std::vector<sf::Event> getEvents();
 			sf::RenderWindow& getInternal();
 
-			void clear(sf::Color colour);
-			void display();
+			void update();
 		};
 	}
 }

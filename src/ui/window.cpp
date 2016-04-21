@@ -45,7 +45,7 @@ namespace IronVein
 			return this->_internal.isOpen();
 		}
 
-		void Window::display()
+		void Window::update()
 		{
 			this->_internal.display();
 		}
@@ -54,11 +54,6 @@ namespace IronVein
 		{
 			Util::output("Closing Window instance");
 			this->_internal.close();
-		}
-
-		void Window::clear(sf::Color colour)
-		{
-			this->_internal.clear(colour);
 		}
 
 		sf::RenderWindow& Window::getInternal()
