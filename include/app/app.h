@@ -12,6 +12,7 @@ namespace IronVein
 		class App
 		{
 			AppCfg _app_cfg;
+			bool _running;
 
 			UI::Window _main_window;
 
@@ -19,6 +20,7 @@ namespace IronVein
 			App();
 			void init(int argc = 0, char* argv[] = nullptr);
 			int run();
+			void close();
 		};
 	}
 }

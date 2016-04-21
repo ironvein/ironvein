@@ -22,12 +22,35 @@ namespace IronVein
 		{
 			Util::output("Running App instance");
 
-			while (true)
+			this->_running = true;
+			while (this->_running)
 			{
+				std::vector<sf::Event> event_vector = this->_main_window.getEvents();
+
+				for (sf::Event event : event_vector)
+				{
+					switch (event.type)
+					{
+					case sf::Event::Closed:
+						this->_main_window.close();
+						this->close();
+						break;
+
+					default:
+						break;
+					}
+				}
+
 				this->_main_window.display();
 			}
 
 			return 0;
+		}
+
+		void App::close()
+		{
+			Util::output("Closing App instance");
+			this->_running = false;
 		}
 	}
 }

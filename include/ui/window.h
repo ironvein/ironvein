@@ -7,6 +7,9 @@
 // library
 #include "SFML/Graphics.hpp"
 
+// standard
+#include "vector"
+
 namespace IronVein
 {
 	namespace UI
@@ -19,7 +22,9 @@ namespace IronVein
 			Window();
 			void init(u16 width, u16 height, bool enabled = true);
 			void setEnabled(bool enabled = true);
+			std::vector<sf::Event> getEvents();
 			void display();
+			void close();
 		};
 	}
 }
