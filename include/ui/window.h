@@ -20,11 +20,17 @@ namespace IronVein
 
 		public:
 			Window();
-			void init(u16 width, u16 height, bool enabled = true);
-			void setEnabled(bool enabled = true);
-			std::vector<sf::Event> getEvents();
-			void display();
+			void init(u16 width, u16 height);
 			void close();
+
+			void setEnabled(bool enabled = true);
+			bool isOpen();
+
+			std::vector<sf::Event> getEvents();
+			sf::RenderWindow& getInternal();
+
+			void clear(sf::Color colour);
+			void display();
 		};
 	}
 }

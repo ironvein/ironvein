@@ -4,6 +4,8 @@
 // local
 #include "app/appcfg.h"
 #include "ui/window.h"
+#include "state/gamestate.h"
+#include "ui/renderer.h"
 
 namespace IronVein
 {
@@ -14,7 +16,9 @@ namespace IronVein
 			AppCfg _app_cfg;
 			bool _running;
 
+			State::GameState _game_state;
 			UI::Window _main_window;
+			UI::Renderer _renderer;
 
 		public:
 			App();
