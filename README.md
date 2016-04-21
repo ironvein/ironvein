@@ -12,7 +12,34 @@ N/A
 
 ## Downloading & Compiling From Source
 
-N/A
+Get a copy of the IronVein source like so:
+
+```
+git clone git://www.github.com/ironvein/ironvein.git
+
+cd ironvein
+```
+
+Create a build environment for IronVein like so:
+
+```
+mkdir build
+cp tup.config build/.
+```
+
+At this point, edit the file "build/tup.config" depending on your build preferences.
+
+Build IronVein like so:
+
+```
+tup build
+```
+
+Run IronVein like so:
+
+```
+./build/ironvein
+```
 
 ## Inspiration
 

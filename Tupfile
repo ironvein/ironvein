@@ -1,0 +1,5 @@
+include_rules
+
+LIBS=-LSFML/lib -lsfml-graphics -lsfml-system -lsfml-window -lsfml-audio
+
+: src/*.o src/game/*.o src/ui/*.o src/util/*.o | data/* |> !cpp_exec |> $(PROJECT_NAME)

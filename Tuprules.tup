@@ -1,0 +1,11 @@
+PROJECT_NAME=ironvein
+PROJECT_VERSION=0.1.0
+PROJECT_VERSION_MAJOR=0
+PROJECT_VERSION_MINOR=1
+PROJECT_VERSION_BUILD=0
+
+CPP_STD=c++11
+CPP_FLAGS=-O2 -g3 -std=$(CPP_STD)
+
+!cpp_obj =	|> @(COMPILER) $(CFLAGS) -c %f $(INCLUDES) -o %o $(STD)|> %B.o
+!cpp_exec =	|> @(COMPILER) $(CFLAGS) -o %o %f $(LIBS) $(STD)|>

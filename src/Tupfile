@@ -1,0 +1,9 @@
+include_rules
+
+INCLUDES=-I../include -ISFML/include
+
+: foreach game/*.cpp	|> !cpp_obj |>
+: foreach ui/*.cpp		|> !cpp_obj |>
+: foreach util/*.cpp	|> !cpp_obj |>
+
+: main.cpp				|> !cpp_obj |>
