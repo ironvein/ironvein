@@ -9,7 +9,7 @@ namespace IronVein
 {
 	namespace State
 	{
-		class Player
+		struct Player
 		{
 			long id;
 			std::string name;
@@ -21,6 +21,7 @@ namespace IronVein
 
 		public:
 			PlayerState();
+			std::vector<Player>& getPlayers();
 		};
 	}
 }

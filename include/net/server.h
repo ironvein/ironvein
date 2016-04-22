@@ -19,12 +19,12 @@ namespace IronVein
 {
 	namespace Net
 	{
-		struct Player
+		struct PlayerSocket
 		{
 			long id;
 			std::shared_ptr<sf::TcpSocket> socket;
 
-			Player();
+			PlayerSocket();
 		};
 
 		class Server
@@ -33,17 +33,13 @@ namespace IronVein
 
 			App::AppCfg _app_cfg;
 			std::weak_ptr<Game::Game> _game;
-			std::vector<Player> _players;
-
-			long _player_id_count = 0;
+			std::vector<PlayerSocket> _player_sockets;
 
 		public:
 			Server();
 			void init(std::weak_ptr<Game::Game> game, App::AppCfg app_cfg);
 
-			long getNewPlayerID();
-			void passMessage(MessageType type, const void* data, umem size);
-			void sendReport(long id, ReportType type, const void* data, umem size);
+			void passReport(sf::Packet packet, int player_id);
 			void disconnect(long id);
 			void tick();
 		};

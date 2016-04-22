@@ -18,23 +18,46 @@ namespace IronVein
 			this->_game_state = game_state;
 		}
 
-		void Game::passMessage(Net::MessageType type, const void* data, umem size)
+		void Game::giveMultiplexer(std::weak_ptr<Net::Multiplexer> multiplexer)
 		{
-			if (type == Net::MessageType::CHAT_MESSAGE)
+			this->_multiplexer = multiplexer;
+		}
+
+		void Game::passMessage(sf::Packet packet, long player_id)
+		{
+			sf::Uint64 type;
+			packet >> type;
+			if ((Net::MessageType)type == Net::MessageType::CHAT_MESSAGE)
 			{
-				std::string message = std::string(static_cast<const char*>(data), size);
-				Util::output("Game recieved chat message '" + message + "'");
+				std::string message;
+				packet >> message;
+
+				Util::output("Player '" + std::to_string(player_id) + "' : '" + message + "'");
 
 				this->_game_state.lock()->getChatState().addMessage(message);
+
+				std::vector<State::Player> players = this->_game_state.lock()->getPlayerState().getPlayers();
+				for (int i = 0; i < players.size(); i ++)
+				{
+					sf::Uint64 type = (long)Net::ReportType::CHAT_MESSAGE;
+					sf::Packet new_packet;
+					new_packet << type << message;
+
+					this->_multiplexer.lock()->passReportTo(new_packet, players[i].id);
+				}
 			}
 		}
 
-		void Game::passReport(Net::ReportType type, const void* data, umem size)
+		void Game::passReport(sf::Packet packet)
 		{
-			if (type == Net::ReportType::CHAT_MESSAGE)
+			sf::Uint64 type;
+			packet >> type;
+			if ((Net::ReportType)type == Net::ReportType::CHAT_MESSAGE)
 			{
-				std::string message = std::string(static_cast<const char*>(data), size);
-				Util::output("Game recieved chat message '" + message + "'");
+				std::string message;
+				packet >> message;
+
+				Util::output("Game recieved chat message from server '" + message + "'");
 
 				this->_game_state.lock()->getChatState().addMessage(message);
 			}
@@ -43,6 +66,21 @@ namespace IronVein
 		void Game::tick()
 		{
 			// Tick
+		}
+
+		long Game::getNewPlayerID()
+		{
+			this->_player_id_count ++;
+			return this->_player_id_count - 1;
+		}
+
+		State::Player& Game::createPlayer()
+		{
+			State::Player new_player;
+			new_player.id = this->getNewPlayerID();
+			
+			this->_game_state.lock()->getPlayerState().getPlayers().push_back(new_player);
+			return this->_game_state.lock()->getPlayerState().getPlayers().back();
 		}
 	}
 }

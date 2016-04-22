@@ -26,7 +26,7 @@ namespace IronVein
 		public:
 			Client();
 			void init(std::weak_ptr<Game::Game> game, App::AppCfg app_cfg);
-			void passMessage(MessageType type, const void* data, umem size);
+			void passMessage(sf::Packet);
 			void tick();
 		};
 	}

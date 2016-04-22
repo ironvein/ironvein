@@ -5,7 +5,7 @@ namespace IronVein
 {
 	namespace State
 	{
-		std::vector<std::string> ChatState::getMessages()
+		std::vector<std::string>& ChatState::getMessages()
 		{
 			return this->_messages;
 		}

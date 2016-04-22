@@ -48,6 +48,9 @@ namespace IronVein
 			this->_multiplexer = std::make_shared<Net::Multiplexer>();
 			this->_multiplexer->init(this->_client, this->_server, this->_game, this->_app_cfg.mode);
 
+			// Link the Game to the Multiplexer
+			this->_game->giveMultiplexer(std::weak_ptr<Net::Multiplexer>(this->_multiplexer));
+
 			// Init the Window and Interface
 			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::CLIENT)
 			{

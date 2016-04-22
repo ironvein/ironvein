@@ -5,6 +5,9 @@
 #include "app/appcfg.h"
 #include "net/message.h"
 
+// library
+#include "SFML/Network.hpp"
+
 // standard
 #include "memory"
 
@@ -32,7 +35,8 @@ namespace IronVein
 			Multiplexer();
 			void init(std::weak_ptr<Net::Client> client, std::weak_ptr<Net::Server> server, std::weak_ptr<Game::Game> game, App::AppMode app_mode);
 
-			void passMessage(Net::MessageType type, const void* data, umem size);
+			void passMessage(sf::Packet packet);
+			void passReportTo(sf::Packet packet, long player_id);
 		};
 	}
 }

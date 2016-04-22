@@ -20,5 +20,10 @@ namespace IronVein
 		{
 			return this->_chat_state;
 		}
+
+		PlayerState& GameState::getPlayerState()
+		{
+			return this->_player_state;
+		}
 	}
 }

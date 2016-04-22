@@ -43,7 +43,7 @@ namespace IronVein
 			sf::Font& getDefaultFont();
 			std::weak_ptr<State::GameState> getGameState();
 
-			void sendMessage(Net::MessageType type, const void* data, umem size);
+			void sendMessage(sf::Packet packet);
 
 			void passEvent(sf::Event event);
 			void tick();

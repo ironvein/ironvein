@@ -32,13 +32,23 @@ namespace IronVein
 					switch (static_cast<char>(event.text.unicode))
 					{
 					case '\b':
-						if (this->_input_text.size() > 0)
-							this->_input_text.pop_back();
+						{
+							if (this->_input_text.size() > 0)
+								this->_input_text.pop_back();
+						}
 						break;
 
 					case 13:
-						interface.sendMessage(Net::MessageType::CHAT_MESSAGE, this->_input_text.c_str(), this->_input_text.size());
-						this->_input_text = "";
+						{
+							sf::Packet packet;
+							sf::Uint64 type = (long)Net::MessageType::CHAT_MESSAGE;
+							packet << type;
+							packet << this->_input_text;
+
+							interface.sendMessage(packet);
+							
+							this->_input_text = "";
+						}
 						break;
 
 					default:

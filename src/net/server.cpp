@@ -11,7 +11,7 @@ namespace IronVein
 			// Constructor
 		}
 
-		Player::Player()
+		PlayerSocket::PlayerSocket()
 		{
 			// Constructor
 		}
@@ -35,90 +35,61 @@ namespace IronVein
 			}
 		}
 
-		long Server::getNewPlayerID()
-		{
-			this->_player_id_count ++;
-			return this->_player_id_count - 1;
-		}
-
-		void Server::passMessage(MessageType type, const void* data, umem size)
-		{
-			this->_game.lock()->passMessage(type, data, size);
-		}
-
 		void Server::tick()
 		{
 			std::shared_ptr<sf::TcpSocket> new_socket = std::make_shared<sf::TcpSocket>();
 			if (this->_listener.accept(*new_socket) == sf::Socket::Done)
 			{
-				Player new_player;
-				new_player.id = this->getNewPlayerID();
+				PlayerSocket new_player;
+				new_player.id = this->_game.lock()->createPlayer().id;
 				new_player.socket = new_socket;
 				new_player.socket->setBlocking(false);
-				this->_players.push_back(new_player);
+				this->_player_sockets.push_back(new_player);
 
 				Util::output("Player with id '" + std::to_string(new_player.id) + "' and address '" + new_player.socket->getRemoteAddress().toString() + ":" + std::to_string(new_player.socket->getRemotePort()) + "' connected");
 			}
 
-			for (long i = 0; i < this->_players.size(); i ++)
+			for (long i = 0; i < this->_player_sockets.size(); i ++)
 			{
 				sf::Packet data_packet;
-				sf::Socket::Status status = this->_players[i].socket->receive(data_packet);
+				sf::Socket::Status status = this->_player_sockets[i].socket->receive(data_packet);
 
 				if (status == sf::Socket::Done)
 				{
-					Util::output("Received message from player '" + std::to_string(this->_players[i].id) + "'");
+					Util::output("Received message from player '" + std::to_string(this->_player_sockets[i].id) + "'");
 
-					sf::Uint64 message_type;
-					data_packet >> message_type;
-
-					if ((MessageType)message_type == MessageType::CHAT_MESSAGE)
-					{
-						std::string message;
-						data_packet >> message;
-						Util::output("Got chat message '" + message + "'");
-
-						for (long i = 0; i < this->_players.size(); i ++)
-							this->sendReport(this->_players[i].id, ReportType::CHAT_MESSAGE, message.c_str(), message.size());
-					}
+					this->_game.lock()->passMessage(data_packet, i);
 				}
 				else if (status == sf::Socket::Status::Disconnected)
 				{
-					Util::output("Player with id '" + std::to_string(this->_players[i].id) + "' disconnected");
-					this->disconnect(this->_players[i].id);
+					Util::output("Player with id '" + std::to_string(this->_player_sockets[i].id) + "' disconnected");
+					this->disconnect(this->_player_sockets[i].id);
 				}
 			}
 
 			this->_game.lock()->tick();
 		}
 
-		void Server::sendReport(long id, ReportType type, const void* data, umem size)
+		void Server::passReport(sf::Packet packet, int player_id)
 		{
-			for (long i = 0; i < this->_players.size(); i ++)
+			for (long i = 0; i < this->_player_sockets.size(); i ++)
 			{
-				if (this->_players[i].id == id)
+				if (this->_player_sockets[i].id == player_id)
 				{
-					sf::Packet data_packet;
-
-					sf::Uint64 report_type = (long)type;
-					std::string report_data = std::string(static_cast<const char*>(data), size);
-
-					data_packet << report_type << report_data;
-
-					this->_players[i].socket->send(data_packet);
+					this->_player_sockets[i].socket->send(packet);
 				}
 			}
 		}
 
 		void Server::disconnect(long id)
 		{
-			for (long i = 0; i < this->_players.size(); i ++)
+			for (long i = 0; i < this->_player_sockets.size(); i ++)
 			{
-				if (this->_players[i].id == id)
+				if (this->_player_sockets[i].id == id)
 				{
-					this->_players[i].socket->disconnect();
-					this->_players[i] = this->_players.back();
-					this->_players.pop_back();
+					this->_player_sockets[i].socket->disconnect();
+					this->_player_sockets[i] = this->_player_sockets.back();
+					this->_player_sockets.pop_back();
 				}
 			}
 		}

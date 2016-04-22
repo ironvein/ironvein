@@ -67,9 +67,9 @@ namespace IronVein
 				this->_widgets[this->_current_widget]->passEvent(event, *this);
 		}
 
-		void Interface::sendMessage(Net::MessageType type, const void* data, umem size)
+		void Interface::sendMessage(sf::Packet packet)
 		{
-			this->_multiplexer.lock()->passMessage(type, data, size);
+			this->_multiplexer.lock()->passMessage(packet);
 		}
 
 		void Interface::tick()

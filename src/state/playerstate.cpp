@@ -9,5 +9,10 @@ namespace IronVein
 		{
 			// Constructor
 		}
+
+		std::vector<Player>& PlayerState::getPlayers()
+		{
+			return this->_players;
+		}
 	}
 }

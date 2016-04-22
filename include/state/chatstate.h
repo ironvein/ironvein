@@ -14,7 +14,7 @@ namespace IronVein
 			std::vector<std::string> _messages;
 
 		public:
-			std::vector<std::string> getMessages();
+			std::vector<std::string>& getMessages();
 			void addMessage(std::string message);
 		};
 	}

@@ -24,19 +24,23 @@ namespace IronVein
 			this->_mode = app_mode;
 		}
 
-		void Multiplexer::passMessage(Net::MessageType type, const void* data, umem size)
+		void Multiplexer::passMessage(sf::Packet packet)
 		{
-			if (this->_mode == App::AppMode::SERVER)
+			if (this->_mode == App::AppMode::CLIENT)
 			{
-				this->_server.lock()->passMessage(type, data, size);
-			}
-			else if (this->_mode == App::AppMode::CLIENT)
-			{
-				this->_client.lock()->passMessage(type, data, size);
+				this->_client.lock()->passMessage(packet);
 			}
 			else if (this->_mode == App::AppMode::LOCAL)
 			{
-				this->_game.lock()->passMessage(type, data, size);
+				this->_game.lock()->passMessage(packet, 0);
+			}
+		}
+
+		void Multiplexer::passReportTo(sf::Packet packet, long player_id)
+		{
+			if (this->_mode == App::AppMode::SERVER)
+			{
+				this->_server.lock()->passReport(packet, player_id);
 			}
 		}
 	}
