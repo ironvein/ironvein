@@ -26,10 +26,25 @@ namespace IronVein
 			this->_game_state = std::make_shared<State::GameState>();
 			this->_game_state->init();
 
+			// Init the Server
+			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::SERVER)
+			{
+				this->_server = std::make_shared<Net::Server>();
+				this->_server->init(std::weak_ptr<State::GameState>(this->_game_state));
+			}
+
+			// Init the Client
+			if (this->_app_cfg.mode == AppMode::CLIENT)
+			{
+				this->_client = std::make_shared<Net::Client>();
+				this->_client->init(this->_app_cfg);
+			}
+
 			// Init the Multiplexer
 			this->_multiplexer = std::make_shared<Net::Multiplexer>();
-			this->_multiplexer->init(this->_server, this->_interface, this->_app_cfg.mode);
+			this->_multiplexer->init(this->_client, this->_server, this->_interface, this->_app_cfg.mode);
 
+			// Init the Window and Interface
 			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::CLIENT)
 			{
 				this->_main_window.init(this->_app_cfg.default_window_width, this->_app_cfg.default_window_height);
@@ -37,12 +52,6 @@ namespace IronVein
 
 				this->_interface = std::make_shared<UI::Interface>();
 				this->_interface->init(std::weak_ptr<State::GameState>(this->_game_state), this->_multiplexer, this->_app_cfg);
-			}
-
-			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::SERVER)
-			{
-				this->_server = std::make_shared<Server::Server>();
-				this->_server->init(std::weak_ptr<State::GameState>(this->_game_state));
 			}
 		}
 

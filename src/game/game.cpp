@@ -1,24 +1,24 @@
 // local
-#include "server/server.h"
+#include "net/server.h"
 #include "util/output.h"
 
 namespace IronVein
 {
-	namespace Server
+	namespace Game
 	{
-		Server::Server()
+		Game::Game()
 		{
 			// Constructor
 		}
 
-		void Server::init(std::weak_ptr<State::GameState> game_state)
+		void Game::init(std::weak_ptr<State::GameState> game_state)
 		{
-			Util::output("Initialising Server instance");
+			Util::output("Initialising Game instance");
 
 			this->_game_state = game_state;
 		}
 
-		void Server::passMessage(Net::MessageType type, const void* data, umem size)
+		void Game::passMessage(Net::MessageType type, const void* data, umem size)
 		{
 			if (type == Net::MessageType::CHAT_MESSAGE)
 			{

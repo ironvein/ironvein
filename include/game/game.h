@@ -1,5 +1,5 @@
-#ifndef IRONVEIN_SERVER_SERVER
-#define IRONVEIN_SERVER_SERVER
+#ifndef IRONVEIN_GAME_GAME
+#define IRONVEIN_GAME_GAME
 
 // local
 #include "net/message.h"
@@ -11,14 +11,14 @@
 
 namespace IronVein
 {
-	namespace Server
+	namespace Game
 	{
-		class Server
+		class Game
 		{
 			std::weak_ptr<State::GameState> _game_state;
 
 		public:
-			Server();
+			Game();
 			void init(std::weak_ptr<State::GameState> game_state);
 			void passMessage(Net::MessageType type, const void* data, umem size);
 		};
