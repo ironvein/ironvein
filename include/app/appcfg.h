@@ -29,6 +29,8 @@ namespace IronVein
 			u16 default_window_height = 600;
 
 			AppMode mode = AppMode::LOCAL;
+			std::string network_address = "";
+			unsigned int network_port = 0;
 		};
 	}
 }

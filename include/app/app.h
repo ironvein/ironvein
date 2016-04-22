@@ -27,6 +27,7 @@ namespace IronVein
 		public:
 			App();
 			void init(int argc = 0, char* argv[] = nullptr);
+			void parseArgs(int argc, char* argv[]);
 			int run();
 			void close();
 		};
