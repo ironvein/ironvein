@@ -11,15 +11,17 @@ namespace IronVein
 			// Constructor
 		}
 
-		void Client::init(App::AppCfg app_cfg)
+		void Client::init(std::weak_ptr<State::GameState> game_state, App::AppCfg app_cfg)
 		{
 			Util::output("Initialising Client instance");
 
+			this->_game_state = game_state;
 			this->_app_cfg = app_cfg;
 
 			Util::output("Connecting to '" + this->_app_cfg.network_address + "'");
 
 			sf::Socket::Status status = this->_socket.connect(this->_app_cfg.network_address, this->_app_cfg.network_port);
+			this->_socket.setBlocking(false);
 			if (status == sf::Socket::Done)
 			{
 				Util::output("Connected successfully");
@@ -32,6 +34,35 @@ namespace IronVein
 			}
 		}
 
+		void Client::tick()
+		{
+			if (this->_connected)
+			{
+				sf::Packet data_packet;
+				sf::Socket::Status status = this->_socket.receive(data_packet);
+
+				if (status == sf::Socket::Done)
+				{
+					Util::output("Received report from server");
+
+					sf::Uint64 message_type;
+					data_packet >> message_type;
+
+					if ((ReportType)message_type == ReportType::CHAT_MESSAGE)
+					{
+						std::string message;
+						data_packet >> message;
+						Util::output("Got chat message '" + message + "'");
+					}
+				}
+				else if (status == sf::Socket::Status::Disconnected)
+				{
+					Util::output("Server disconnected");
+					this->_connected = false;
+				}
+			}
+		}
+
 		void Client::passMessage(MessageType type, const void* data, umem size)
 		{
 			if (!this->_connected)
@@ -41,6 +72,14 @@ namespace IronVein
 			}
 
 			Util::output("Sending message to '" + this->_app_cfg.network_address + "'");
+
+			sf::Uint64 message_type = (long)type;
+			std::string message_data = std::string(static_cast<const char*>(data), size);
+
+			sf::Packet data_packet;
+			data_packet << message_type << message_data;
+
+			this->_socket.send(data_packet);
 		}
 	}
 }
