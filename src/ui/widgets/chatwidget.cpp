@@ -46,7 +46,7 @@ namespace IronVein
 							packet << this->_input_text;
 
 							interface.sendMessage(packet);
-							
+
 							this->_input_text = "";
 						}
 						break;

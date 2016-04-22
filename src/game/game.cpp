@@ -41,7 +41,7 @@ namespace IronVein
 				{
 					sf::Uint64 type = (long)Net::ReportType::CHAT_MESSAGE;
 					sf::Packet new_packet;
-					new_packet << type << message;
+					new_packet << type << "Player " + std::to_string(player_id) + ": " + message;
 
 					this->_multiplexer.lock()->passReportTo(new_packet, players[i].id);
 				}
@@ -78,7 +78,7 @@ namespace IronVein
 		{
 			State::Player new_player;
 			new_player.id = this->getNewPlayerID();
-			
+
 			this->_game_state.lock()->getPlayerState().getPlayers().push_back(new_player);
 			return this->_game_state.lock()->getPlayerState().getPlayers().back();
 		}

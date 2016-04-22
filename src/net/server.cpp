@@ -58,7 +58,7 @@ namespace IronVein
 				{
 					Util::output("Received message from player '" + std::to_string(this->_player_sockets[i].id) + "'");
 
-					this->_game.lock()->passMessage(data_packet, i);
+					this->_game.lock()->passMessage(data_packet, this->_player_sockets[i].id);
 				}
 				else if (status == sf::Socket::Status::Disconnected)
 				{
