@@ -8,6 +8,7 @@ namespace IronVein
 {
 	namespace State
 	{
+		/* A struct representing a single in-game block */
 		struct BlockState
 		{
 			u32 type;

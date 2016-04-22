@@ -15,6 +15,7 @@ namespace IronVein
 {
 	namespace State
 	{
+		/* A class representing the voxel world component of a game */
 		class WorldState
 		{
 			i32 _region_size = 64;

@@ -11,6 +11,7 @@ namespace IronVein
 {
 	namespace App
 	{
+		/* Modes to specify the operation of the app */
 		enum class AppMode
 		{
 			NONE,	// The game will close immediately
@@ -19,6 +20,7 @@ namespace IronVein
 			SERVER,	// Server mode tells the game to operate as a server of a networked game, without a UI
 		};
 
+		/* A struct containing configuration data for an app instance */
 		struct AppCfg
 		{
 			std::string data_directory = "data";

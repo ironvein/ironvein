@@ -8,7 +8,8 @@ namespace IronVein
 {
 	namespace Util
 	{
-		enum class OutputType
+		/* OutputMode used to specify how and when output is displayed */
+		enum class OutputMode
 		{
 			DEBUG,
 			INFO,
@@ -16,7 +17,7 @@ namespace IronVein
 			FAULT,
 		};
 
-		int output(std::string msg, OutputType type = OutputType::DEBUG);
+		int output(std::string msg, OutputMode mode = OutputMode::DEBUG);
 	}
 }
 

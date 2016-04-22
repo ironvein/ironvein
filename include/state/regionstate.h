@@ -11,6 +11,7 @@ namespace IronVein
 {
 	namespace State
 	{
+		/* A class representing a single loaded in-game region */
 		class RegionState
 		{
 			std::vector<ColumnState> _columns;

@@ -16,12 +16,15 @@ namespace IronVein
 		{
 			Util::output("Initialising App instance");
 
-			this->_game_state.init();
+			// Before init, create instances
+			this->_game_state = std::make_shared<State::GameState>();
+
+			this->_game_state->init();
 
 			this->_main_window.init(this->_app_cfg.default_window_width, this->_app_cfg.default_window_height);
 			this->_main_window.setTitle(Config::project_name + " " + Config::project_version);
 
-			this->_interface.init(&this->_game_state);
+			this->_interface.init(std::weak_ptr<State::GameState>(this->_game_state), this->_app_cfg);
 		}
 
 		int App::run()
@@ -40,11 +43,11 @@ namespace IronVein
 					switch (event.type)
 					{
 					case sf::Event::Closed:
-						this->_main_window.close();
 						this->close();
 						break;
 
 					default:
+						this->_interface.passEvent(event);
 						break;
 					}
 				}
@@ -59,6 +62,10 @@ namespace IronVein
 		void App::close()
 		{
 			Util::output("Closing App instance");
+
+			if (this->_main_window.isOpen())
+				this->_main_window.close();
+
 			this->_running = false;
 		}
 	}

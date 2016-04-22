@@ -8,20 +8,20 @@ namespace IronVein
 {
 	namespace Util
 	{
-		int output(std::string msg, OutputType type)
+		int output(std::string msg, OutputMode mode)
 		{
-			switch(type)
+			switch (mode)
 			{
-			case OutputType::DEBUG:
+			case OutputMode::DEBUG:
 				std::cout << "[ DEBUG ] ";
 				break;
-			case OutputType::INFO:
+			case OutputMode::INFO:
 				std::cout << "[ INFO  ] ";
 				break;
-			case OutputType::ERROR:
+			case OutputMode::ERROR:
 				std::cout << "[ ERROR ] ";
 				break;
-			case OutputType::FAULT:
+			case OutputMode::FAULT:
 				std::cout << "[ FAULT ] ";
 				break;
 			default:

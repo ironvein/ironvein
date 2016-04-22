@@ -7,16 +7,20 @@
 #include "state/gamestate.h"
 #include "ui/interface.h"
 
+// standard
+#include "memory"
+
 namespace IronVein
 {
 	namespace App
 	{
+		/* class that encapsulates a single app instance */
 		class App
 		{
 			AppCfg _app_cfg;
 			bool _running;
 
-			State::GameState _game_state;
+			std::shared_ptr<State::GameState> _game_state;
 			UI::Window _main_window;
 			UI::Interface _interface;
 

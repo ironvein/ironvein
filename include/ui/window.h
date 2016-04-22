@@ -15,6 +15,7 @@ namespace IronVein
 {
 	namespace UI
 	{
+		/* A class representing an interactive program window */
 		class Window
 		{
 			sf::RenderWindow _internal;

@@ -9,6 +9,7 @@ namespace IronVein
 {
 	namespace UI
 	{
+		/* A class representing a game world renderer */
 		class Renderer
 		{
 		public:

@@ -8,6 +8,7 @@ namespace IronVein
 {
 	namespace State
 	{
+		/* A class representing the state of an entire game */
 		class GameState
 		{
 			WorldState _world_state;

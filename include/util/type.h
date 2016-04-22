@@ -6,6 +6,7 @@
 
 namespace IronVein
 {
+	/* Useful utility typedefs */
 	typedef unsigned char	byte;
 
 	typedef char			i8;

@@ -5,6 +5,7 @@ namespace IronVein
 {
 	namespace Config
 	{
+		/* Useful constants used within the game */
 		const std::string project_name = "IronVein";
 		const std::string project_version = "0.1.0";
 		const int project_version_major = 0;
