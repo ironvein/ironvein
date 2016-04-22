@@ -6,6 +6,7 @@
 #include "util/type.h"
 #include "state/gamestate.h"
 #include "net/multiplexer.h"
+#include "app/appcfg.h"
 
 // library
 #include "SFML/Network.hpp"
@@ -22,11 +23,13 @@ namespace IronVein
 			std::weak_ptr<State::GameState> _game_state;
 			std::weak_ptr<Net::Multiplexer> _multiplexer;
 
+			App::AppMode _mode;
+
 			long _player_id_count = 0;
 
 		public:
 			Game();
-			void init(std::weak_ptr<State::GameState> game_state);
+			void init(std::weak_ptr<State::GameState> game_state, App::AppMode mode);
 			void giveMultiplexer(std::weak_ptr<Net::Multiplexer> multiplexer);
 
 			void passMessage(sf::Packet packet, long player_id);

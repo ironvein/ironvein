@@ -1,6 +1,7 @@
 // local
 #include "net/server.h"
 #include "util/output.h"
+#include "game/worldgenerator.h"
 
 namespace IronVein
 {
@@ -11,11 +12,17 @@ namespace IronVein
 			// Constructor
 		}
 
-		void Game::init(std::weak_ptr<State::GameState> game_state)
+		void Game::init(std::weak_ptr<State::GameState> game_state, App::AppMode mode)
 		{
 			Util::output("Initialising Game instance");
 
 			this->_game_state = game_state;
+			this->_mode = mode;
+
+			if (this->_mode == App::AppMode::SERVER || this->_mode == App::AppMode::LOCAL)
+			{
+				GenerateWorld(*this->_game_state.lock());
+			}
 		}
 
 		void Game::giveMultiplexer(std::weak_ptr<Net::Multiplexer> multiplexer)

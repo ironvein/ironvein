@@ -28,7 +28,7 @@ namespace IronVein
 
 			// Init the Game
 			this->_game = std::make_shared<Game::Game>();
-			this->_game->init(std::weak_ptr<State::GameState>(this->_game_state));
+			this->_game->init(std::weak_ptr<State::GameState>(this->_game_state), this->_app_cfg.mode);
 
 			// Init the Server
 			if (this->_app_cfg.mode == AppMode::SERVER)

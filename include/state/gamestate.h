@@ -21,6 +21,7 @@ namespace IronVein
 			GameState();
 			void init();
 
+			WorldState& getWorldState();
 			ChatState& getChatState();
 			PlayerState& getPlayerState();
 		};
