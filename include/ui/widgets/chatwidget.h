@@ -22,7 +22,7 @@ namespace IronVein
 				virtual ~ChatWidget();
 				void init(Interface& interface);
 
-				void passEvent(sf::Event event);
+				void passEvent(sf::Event event, Interface& interface);
 
 				void tick(Interface& interface, bool has_focus = false);
 				void render(Interface& interface, Window& window, bool has_focus = false);

@@ -24,20 +24,29 @@ namespace IronVein
 				Util::output("Initialising ChatWidget instance");
 			}
 
-			void ChatWidget::passEvent(sf::Event event)
+			void ChatWidget::passEvent(sf::Event event, Interface& interface)
 			{
 				switch (event.type)
 				{
 				case sf::Event::TextEntered:
 					Util::output(std::string("ChatWindow got passed '") + static_cast<char>(event.text.unicode) + "'");
 
-					if (static_cast<char>(event.text.unicode) == '\b')
+					switch (static_cast<char>(event.text.unicode))
 					{
+					case '\b':
 						if (this->_input_text.size() > 0)
 							this->_input_text.pop_back();
-					}
-					else
+						break;
+
+					case 13:
+						interface.sendMessage(Net::MessageType::CHAT_MESSAGE, this->_input_text.c_str(), this->_input_text.size());
+						this->_input_text = "";
+						break;
+
+					default:
 						this->_input_text += static_cast<char>(event.text.unicode);
+						break;
+					}
 					break;
 
 				default:

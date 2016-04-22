@@ -21,7 +21,7 @@ namespace IronVein
 				virtual ~Widget();
 				virtual void init(Interface& interface) = 0;
 
-				virtual void passEvent(sf::Event event) = 0;
+				virtual void passEvent(sf::Event event, Interface& interface) = 0;
 
 				virtual void tick(Interface& interface, bool has_focus = false) = 0;
 				virtual void render(Interface& interface, Window& window, bool has_focus = false) = 0;

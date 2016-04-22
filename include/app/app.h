@@ -6,6 +6,8 @@
 #include "ui/window.h"
 #include "state/gamestate.h"
 #include "ui/interface.h"
+#include "server/server.h"
+#include "net/multiplexer.h"
 
 // standard
 #include "memory"
@@ -21,8 +23,12 @@ namespace IronVein
 			bool _running;
 
 			std::shared_ptr<State::GameState> _game_state;
+
+			std::shared_ptr<Server::Server> _server;
+			std::shared_ptr<Net::Multiplexer> _multiplexer;
+
 			UI::Window _main_window;
-			UI::Interface _interface;
+			std::shared_ptr<UI::Interface> _interface;
 
 		public:
 			App();

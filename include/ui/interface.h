@@ -7,6 +7,7 @@
 #include "ui/window.h"
 #include "ui/widgets/widget.h"
 #include "app/appcfg.h"
+#include "net/multiplexer.h"
 
 // library
 #include "SFML/Graphics.hpp"
@@ -25,6 +26,7 @@ namespace IronVein
 			std::weak_ptr<State::GameState> _game_state;
 
 			App::AppCfg _app_cfg;
+			std::weak_ptr<Net::Multiplexer> _multiplexer;
 
 			std::vector<std::shared_ptr<Widgets::Widget>> _widgets;
 			int _current_widget = -1;
@@ -35,10 +37,12 @@ namespace IronVein
 
 		public:
 			Interface();
-			void init(std::weak_ptr<State::GameState> game_state, App::AppCfg app_cfg);
+			void init(std::weak_ptr<State::GameState> game_state, std::weak_ptr<Net::Multiplexer> multiplexer, App::AppCfg app_cfg);
 
 			void addWidget(std::shared_ptr<Widgets::Widget> widget);
 			sf::Font& getDefaultFont();
+
+			void sendMessage(Net::MessageType type, const void* data, umem size);
 
 			void passEvent(sf::Event event);
 			void tick();

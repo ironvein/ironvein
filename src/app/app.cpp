@@ -19,16 +19,31 @@ namespace IronVein
 		{
 			Util::output("Initialising App instance");
 
+			// Parse command-line arguments
 			this->parseArgs(argc, argv);
 
-			// Before init, create instances
+			// Before init, create GameState instances
 			this->_game_state = std::make_shared<State::GameState>();
 			this->_game_state->init();
 
-			this->_main_window.init(this->_app_cfg.default_window_width, this->_app_cfg.default_window_height);
-			this->_main_window.setTitle(Config::project_name + " " + Config::project_version);
+			// Init the Multiplexer
+			this->_multiplexer = std::make_shared<Net::Multiplexer>();
+			this->_multiplexer->init(this->_server, this->_interface, this->_app_cfg.mode);
 
-			this->_interface.init(std::weak_ptr<State::GameState>(this->_game_state), this->_app_cfg);
+			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::CLIENT)
+			{
+				this->_main_window.init(this->_app_cfg.default_window_width, this->_app_cfg.default_window_height);
+				this->_main_window.setTitle(Config::project_name + " " + Config::project_version);
+
+				this->_interface = std::make_shared<UI::Interface>();
+				this->_interface->init(std::weak_ptr<State::GameState>(this->_game_state), this->_multiplexer, this->_app_cfg);
+			}
+
+			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::SERVER)
+			{
+				this->_server = std::make_shared<Server::Server>();
+				this->_server->init(std::weak_ptr<State::GameState>(this->_game_state));
+			}
 		}
 
 		void App::parseArgs(int argc, char* argv[])
@@ -91,12 +106,12 @@ namespace IronVein
 						break;
 
 					default:
-						this->_interface.passEvent(event);
+						this->_interface->passEvent(event);
 						break;
 					}
 				}
 
-				this->_interface.render(this->_main_window);
+				this->_interface->render(this->_main_window);
 				this->_main_window.update();
 			}
 

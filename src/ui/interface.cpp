@@ -13,11 +13,12 @@ namespace IronVein
 			// Constructor
 		}
 
-		void Interface::init(std::weak_ptr<State::GameState> game_state, App::AppCfg app_cfg)
+		void Interface::init(std::weak_ptr<State::GameState> game_state, std::weak_ptr<Net::Multiplexer> multiplexer, App::AppCfg app_cfg)
 		{
 			Util::output("Initialising Interface instance");
 
 			this->_game_state = game_state;
+			this->_multiplexer = multiplexer;
 			this->_app_cfg = app_cfg;
 
 			// Load default resources
@@ -46,11 +47,11 @@ namespace IronVein
 			switch (event.type)
 			{
 			case sf::Event::KeyPressed:
-				Util::output("Key pressed!");
+				//Util::output("Key pressed!");
 				break;
 
 			case sf::Event::TextEntered:
-				Util::output(std::string("Key '") + static_cast<char>(event.text.unicode) + "' pressed!");
+				//Util::output(std::string("Key '") + static_cast<char>(event.text.unicode) + "' pressed!");
 				break;
 
 			default:
@@ -58,7 +59,12 @@ namespace IronVein
 			}
 
 			if (this->_current_widget >= 0 && this->_current_widget < this->_widgets.size())
-				this->_widgets[this->_current_widget]->passEvent(event);
+				this->_widgets[this->_current_widget]->passEvent(event, *this);
+		}
+
+		void Interface::sendMessage(Net::MessageType type, const void* data, umem size)
+		{
+			this->_multiplexer.lock()->passMessage(type, data, size);
 		}
 
 		void Interface::tick()
