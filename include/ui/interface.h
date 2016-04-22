@@ -41,6 +41,7 @@ namespace IronVein
 
 			void addWidget(std::shared_ptr<Widgets::Widget> widget);
 			sf::Font& getDefaultFont();
+			std::weak_ptr<State::GameState> getGameState();
 
 			void sendMessage(Net::MessageType type, const void* data, umem size);
 

@@ -23,8 +23,26 @@ namespace IronVein
 			if (type == Net::MessageType::CHAT_MESSAGE)
 			{
 				std::string message = std::string(static_cast<const char*>(data), size);
-				Util::output("Server recieved chat message '" + message + "'");
+				Util::output("Game recieved chat message '" + message + "'");
+
+				this->_game_state.lock()->getChatState().addMessage(message);
 			}
+		}
+
+		void Game::passReport(Net::ReportType type, const void* data, umem size)
+		{
+			if (type == Net::ReportType::CHAT_MESSAGE)
+			{
+				std::string message = std::string(static_cast<const char*>(data), size);
+				Util::output("Game recieved chat message '" + message + "'");
+
+				this->_game_state.lock()->getChatState().addMessage(message);
+			}
+		}
+
+		void Game::tick()
+		{
+			// Tick
 		}
 	}
 }

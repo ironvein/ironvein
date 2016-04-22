@@ -16,12 +16,11 @@ namespace IronVein
 			// Constructor
 		}
 
-		void Server::init(std::weak_ptr<State::GameState> game_state, App::AppCfg app_cfg)
+		void Server::init(std::weak_ptr<Game::Game> game, App::AppCfg app_cfg)
 		{
 			Util::output("Initialising Server instance");
 
-			this->_game = std::make_shared<Game::Game>();
-			this->_game->init(game_state);
+			this->_game = game;
 
 			this->_app_cfg = app_cfg;
 
@@ -44,7 +43,7 @@ namespace IronVein
 
 		void Server::passMessage(MessageType type, const void* data, umem size)
 		{
-			this->_game->passMessage(type, data, size);
+			this->_game.lock()->passMessage(type, data, size);
 		}
 
 		void Server::tick()
@@ -89,13 +88,15 @@ namespace IronVein
 					this->disconnect(this->_players[i].id);
 				}
 			}
+
+			this->_game.lock()->tick();
 		}
 
 		void Server::sendReport(long id, ReportType type, const void* data, umem size)
 		{
 			for (long i = 0; i < this->_players.size(); i ++)
 			{
-				if (this->_players[i].id == i)
+				if (this->_players[i].id == id)
 				{
 					sf::Packet data_packet;
 

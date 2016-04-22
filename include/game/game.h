@@ -21,6 +21,8 @@ namespace IronVein
 			Game();
 			void init(std::weak_ptr<State::GameState> game_state);
 			void passMessage(Net::MessageType type, const void* data, umem size);
+			void passReport(Net::ReportType type, const void* data, umem size);
+			void tick();
 		};
 	}
 }

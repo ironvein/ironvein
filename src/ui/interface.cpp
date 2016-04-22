@@ -42,6 +42,11 @@ namespace IronVein
 			return this->_default_font;
 		}
 
+		std::weak_ptr<State::GameState> Interface::getGameState()
+		{
+			return this->_game_state;
+		}
+
 		void Interface::passEvent(sf::Event event)
 		{
 			switch (event.type)

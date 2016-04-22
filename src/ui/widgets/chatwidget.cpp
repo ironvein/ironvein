@@ -29,8 +29,6 @@ namespace IronVein
 				switch (event.type)
 				{
 				case sf::Event::TextEntered:
-					Util::output(std::string("ChatWindow got passed '") + static_cast<char>(event.text.unicode) + "'");
-
 					switch (static_cast<char>(event.text.unicode))
 					{
 					case '\b':
@@ -65,6 +63,7 @@ namespace IronVein
 				chat_window_border.setPosition(sf::Vector2f(16, 16));
 				chat_window_border.setSize(sf::Vector2f(256, 256));
 				chat_window_border.setFillColor(sf::Color(0, 200, 0, 100));
+				window.getInternal().draw(chat_window_border);
 
 				sf::Text chat_text;
 				chat_text.setString(this->_input_text);
@@ -72,9 +71,16 @@ namespace IronVein
 				chat_text.setPosition(sf::Vector2f(24, 24));
 				chat_text.setCharacterSize(12);
 				chat_text.setColor(sf::Color::White);
-
-				window.getInternal().draw(chat_window_border);
 				window.getInternal().draw(chat_text);
+
+				std::vector<std::string> messages = interface.getGameState().lock()->getChatState().getMessages();
+				for (int i = 0; i < messages.size(); i ++)
+				{
+					chat_text.setString(messages[messages.size() - i - 1]);
+					chat_text.setPosition(sf::Vector2f(24, 36 + i * 12));
+					chat_text.setColor(sf::Color::Black);
+					window.getInternal().draw(chat_text);
+				}
 			}
 		}
 	}

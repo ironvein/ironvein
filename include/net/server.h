@@ -32,14 +32,14 @@ namespace IronVein
 			sf::TcpListener _listener;
 
 			App::AppCfg _app_cfg;
-			std::shared_ptr<Game::Game> _game;
+			std::weak_ptr<Game::Game> _game;
 			std::vector<Player> _players;
 
 			long _player_id_count = 0;
 
 		public:
 			Server();
-			void init(std::weak_ptr<State::GameState> game_state, App::AppCfg app_cfg);
+			void init(std::weak_ptr<Game::Game> game, App::AppCfg app_cfg);
 
 			long getNewPlayerID();
 			void passMessage(MessageType type, const void* data, umem size);

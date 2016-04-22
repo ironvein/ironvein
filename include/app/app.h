@@ -24,6 +24,7 @@ namespace IronVein
 			bool _running;
 
 			std::shared_ptr<State::GameState> _game_state;
+			std::shared_ptr<Game::Game> _game;
 
 			std::shared_ptr<Net::Client> _client;
 			std::shared_ptr<Net::Server> _server;

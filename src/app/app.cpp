@@ -22,27 +22,31 @@ namespace IronVein
 			// Parse command-line arguments
 			this->parseArgs(argc, argv);
 
-			// Before init, create GameState instances
+			// Init the GameState
 			this->_game_state = std::make_shared<State::GameState>();
 			this->_game_state->init();
 
+			// Init the Game
+			this->_game = std::make_shared<Game::Game>();
+			this->_game->init(std::weak_ptr<State::GameState>(this->_game_state));
+
 			// Init the Server
-			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::SERVER)
+			if (this->_app_cfg.mode == AppMode::SERVER)
 			{
 				this->_server = std::make_shared<Net::Server>();
-				this->_server->init(std::weak_ptr<State::GameState>(this->_game_state), this->_app_cfg);
+				this->_server->init(std::weak_ptr<Game::Game>(this->_game), this->_app_cfg);
 			}
 
 			// Init the Client
 			if (this->_app_cfg.mode == AppMode::CLIENT)
 			{
 				this->_client = std::make_shared<Net::Client>();
-				this->_client->init(std::weak_ptr<State::GameState>(this->_game_state), this->_app_cfg);
+				this->_client->init(std::weak_ptr<Game::Game>(this->_game), this->_app_cfg);
 			}
 
 			// Init the Multiplexer
 			this->_multiplexer = std::make_shared<Net::Multiplexer>();
-			this->_multiplexer->init(this->_client, this->_server, this->_interface, this->_app_cfg.mode);
+			this->_multiplexer->init(this->_client, this->_server, this->_game, this->_app_cfg.mode);
 
 			// Init the Window and Interface
 			if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::CLIENT)

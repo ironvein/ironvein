@@ -10,9 +10,9 @@
 
 namespace IronVein
 {
-	namespace UI
+	namespace Game
 	{
-		class Interface;
+		class Game;
 	}
 
 	namespace Net
@@ -26,11 +26,11 @@ namespace IronVein
 
 			std::weak_ptr<Net::Client> _client;
 			std::weak_ptr<Net::Server> _server;
-			std::weak_ptr<UI::Interface> _interface;
+			std::weak_ptr<Game::Game> _game;
 
 		public:
 			Multiplexer();
-			void init(std::weak_ptr<Net::Client> client, std::weak_ptr<Net::Server> server, std::weak_ptr<UI::Interface> interface, App::AppMode app_mode);
+			void init(std::weak_ptr<Net::Client> client, std::weak_ptr<Net::Server> server, std::weak_ptr<Game::Game> game, App::AppMode app_mode);
 
 			void passMessage(Net::MessageType type, const void* data, umem size);
 		};

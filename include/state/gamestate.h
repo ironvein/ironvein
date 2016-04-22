@@ -3,6 +3,7 @@
 
 // local
 #include "state/worldstate.h"
+#include "state/chatstate.h"
 
 namespace IronVein
 {
@@ -12,10 +13,13 @@ namespace IronVein
 		class GameState
 		{
 			WorldState _world_state;
+			ChatState _chat_state;
 
 		public:
 			GameState();
 			void init();
+
+			ChatState& getChatState();
 		};
 	}
 }

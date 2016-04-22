@@ -15,5 +15,10 @@ namespace IronVein
 		{
 			Util::output("Initialising GameState instance");
 		}
+
+		ChatState& GameState::getChatState()
+		{
+			return this->_chat_state;
+		}
 	}
 }

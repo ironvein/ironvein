@@ -11,11 +11,11 @@ namespace IronVein
 			// Constructor
 		}
 
-		void Client::init(std::weak_ptr<State::GameState> game_state, App::AppCfg app_cfg)
+		void Client::init(std::weak_ptr<Game::Game> game, App::AppCfg app_cfg)
 		{
 			Util::output("Initialising Client instance");
 
-			this->_game_state = game_state;
+			this->_game = game;
 			this->_app_cfg = app_cfg;
 
 			Util::output("Connecting to '" + this->_app_cfg.network_address + "'");
@@ -53,6 +53,7 @@ namespace IronVein
 						std::string message;
 						data_packet >> message;
 						Util::output("Got chat message '" + message + "'");
+						this->_game.lock()->passReport((ReportType)message_type, message.c_str(), message.size());
 					}
 				}
 				else if (status == sf::Socket::Status::Disconnected)
