@@ -8,6 +8,7 @@
 #include "ui/widgets/widget.h"
 #include "app/appcfg.h"
 #include "net/multiplexer.h"
+#include "ui/interfacestate.h"
 
 // library
 #include "SFML/Graphics.hpp"
@@ -24,6 +25,7 @@ namespace IronVein
 		class Interface
 		{
 			std::weak_ptr<State::GameState> _game_state;
+			InterfaceState _state;
 
 			App::AppCfg _app_cfg;
 			std::weak_ptr<Net::Multiplexer> _multiplexer;
@@ -41,7 +43,9 @@ namespace IronVein
 
 			void addWidget(std::shared_ptr<Widgets::Widget> widget);
 			sf::Font& getDefaultFont();
+
 			std::weak_ptr<State::GameState> getGameState();
+			InterfaceState& getState();
 
 			void sendMessage(sf::Packet packet);
 

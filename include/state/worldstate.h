@@ -8,9 +8,6 @@
 // library
 #include "glm/glm.hpp"
 
-// standard
-#include "map"
-
 namespace IronVein
 {
 	namespace State
@@ -18,12 +15,19 @@ namespace IronVein
 		/* A class representing the voxel world component of a game */
 		class WorldState
 		{
-			i32 _region_size = 64;
 			i32 _region_depth = 64;
-			i32 _world_width = 64;
-			i32 _world_height = 64;
+			glm::ivec2 _region_size = glm::ivec2(64, 64);
+			glm::ivec2 _size = glm::ivec2(64, 64);
 
-			std::map<glm::ivec3, RegionState> _regions;
+			std::vector<RegionState> _regions;
+
+		public:
+			WorldState();
+			void init();
+
+			RegionState& getRegion(glm::ivec2 position);
+			glm::ivec2 getSize();
+			glm::ivec2 getRegionSize();
 		};
 	}
 }

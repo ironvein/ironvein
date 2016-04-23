@@ -14,6 +14,8 @@ namespace IronVein
 		void GameState::init()
 		{
 			Util::output("Initialising GameState instance");
+
+			this->_world_state.init();
 		}
 
 		WorldState& GameState::getWorldState()

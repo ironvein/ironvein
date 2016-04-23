@@ -3,6 +3,7 @@
 #include "util/output.h"
 #include "ui/widgets/chatwidget.h"
 #include "common/config.h"
+#include "ui/widgets/overworldwidget.h"
 
 namespace IronVein
 {
@@ -26,6 +27,7 @@ namespace IronVein
 
 			// Create a few default widgets
 			this->addWidget(std::make_shared<Widgets::ChatWidget>());
+			this->addWidget(std::make_shared<IronVein::UI::Widgets::OverworldWidget>());
 			this->_current_widget = 0;
 
 			this->_renderer.init();
@@ -47,12 +49,31 @@ namespace IronVein
 			return this->_game_state;
 		}
 
+		InterfaceState& Interface::getState()
+		{
+			return this->_state;
+		}
+
 		void Interface::passEvent(sf::Event event)
 		{
+			bool cancel_pass = false;
+
 			switch (event.type)
 			{
 			case sf::Event::KeyPressed:
-				//Util::output("Key pressed!");
+				{
+					cancel_pass = true;
+					if (event.key.code == sf::Keyboard::Left)
+						this->_state.position.x --;
+					else if (event.key.code == sf::Keyboard::Right)
+						this->_state.position.x ++;
+					else if (event.key.code == sf::Keyboard::Up)
+						this->_state.position.y --;
+					else if (event.key.code == sf::Keyboard::Down)
+						this->_state.position.y ++;
+					else
+						cancel_pass = false;
+				}
 				break;
 
 			case sf::Event::TextEntered:
@@ -63,7 +84,7 @@ namespace IronVein
 				break;
 			}
 
-			if (this->_current_widget >= 0 && this->_current_widget < this->_widgets.size())
+			if (!cancel_pass && this->_current_widget >= 0 && this->_current_widget < this->_widgets.size())
 				this->_widgets[this->_current_widget]->passEvent(event, *this);
 		}
 

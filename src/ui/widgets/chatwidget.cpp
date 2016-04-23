@@ -70,7 +70,7 @@ namespace IronVein
 			void ChatWidget::render(Interface& interface, Window& window, bool has_focus)
 			{
 				sf::RectangleShape chat_window_border;
-				chat_window_border.setPosition(sf::Vector2f(16, 16));
+				chat_window_border.setPosition(sf::Vector2f(16, 216));
 				chat_window_border.setSize(sf::Vector2f(256, 256));
 				chat_window_border.setFillColor(sf::Color(0, 200, 0, 100));
 				window.getInternal().draw(chat_window_border);
@@ -78,7 +78,7 @@ namespace IronVein
 				sf::Text chat_text;
 				chat_text.setString(this->_input_text);
 				chat_text.setFont(interface.getDefaultFont());
-				chat_text.setPosition(sf::Vector2f(24, 24));
+				chat_text.setPosition(sf::Vector2f(24, 224));
 				chat_text.setCharacterSize(12);
 				chat_text.setColor(sf::Color::White);
 				window.getInternal().draw(chat_text);
@@ -87,7 +87,7 @@ namespace IronVein
 				for (int i = 0; i < messages.size(); i ++)
 				{
 					chat_text.setString(messages[messages.size() - i - 1]);
-					chat_text.setPosition(sf::Vector2f(24, 36 + i * 12));
+					chat_text.setPosition(sf::Vector2f(24, 236 + i * 12));
 					chat_text.setColor(sf::Color::Black);
 					window.getInternal().draw(chat_text);
 				}
