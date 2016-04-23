@@ -14,9 +14,9 @@ namespace IronVein
 
 			float Noise2D(float x, float y);
 			float Noise3D(float x, float y, float z);
-			
-			float Perlin2D(float x, float y, int octaves, float amp, float wavelength, int skip = 1);
-			float Perlin3D(float x, float y, float z, int octaves, float amp, float wavelength, int skip = 1);
+
+			float ValueNoise2D(float x, float y, float amplitude, float wavelength, int octaves = 3, float factor = 0.5f);
+			float ValueNoise2D(float x, float y, float z, float amplitude, float wavelength, int octaves = 3, float factor = 0.5f);
 		}
 	}
 }

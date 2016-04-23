@@ -1,7 +1,7 @@
 // local
 #include "game/worldgenerator.h"
 #include "util/output.h"
-#include "util/generation/perlin.h"
+#include "util/generation/noise.h"
 
 namespace IronVein
 {
@@ -22,12 +22,10 @@ namespace IronVein
 			{
 				for (int j = 0; j < world_state.getSize().y; j ++)
 				{
-					Util::output("Generating overworld region (" + std::to_string(i) + ", " + std::to_string(j) + ")");
-
-					float z_00 = Util::Generation::Perlin2D(i, j, 3, 1000, 32, 1);
-					float z_01 = Util::Generation::Perlin2D(i, j + 1, 3, 1000, 32, 1);
-					float z_10 = Util::Generation::Perlin2D(i + 1, j, 3, 1000, 32, 1);
-					float z_11 = Util::Generation::Perlin2D(i + 1, j + 1, 3, 1000, 32, 1);
+					float z_00 = 1000.0f + Util::Generation::ValueNoise2D(i, j,			500.0f, 32.0f, 3, 0.5f);
+					float z_01 = 1000.0f + Util::Generation::ValueNoise2D(i, j + 1,		500.0f, 32.0f, 3, 0.5f);
+					float z_10 = 1000.0f + Util::Generation::ValueNoise2D(i + 1, j,		500.0f, 32.0f, 3, 0.5f);
+					float z_11 = 1000.0f + Util::Generation::ValueNoise2D(i + 1, j + 1,	500.0f, 32.0f, 3, 0.5f);
 
 					State::RegionState& region_state = world_state.getRegion(glm::ivec2(i, j));
 
@@ -37,6 +35,8 @@ namespace IronVein
 					region_state.getProperties().zoffset_11 = (int)z_11;
 				}
 			}
+
+			Util::output("Generated overworld");
 		}
 	}
 }

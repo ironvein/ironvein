@@ -29,7 +29,7 @@ namespace IronVein
 			}
 			else
 			{
-				Util::output("Connection failed");
+				Util::output("Connection failed", Util::OutputMode::ERROR);
 				this->_connected = false;
 			}
 		}

@@ -51,11 +51,16 @@ namespace IronVein
 					{
 						for (int j = 0; j < 6; j ++)
 						{
+							int xx = interface.getState().position.x + i;
+							int yy = interface.getState().position.y + j;
+							if (xx < 0 || yy < 0 || xx >= world_state.getSize().x || yy >= world_state.getSize().y)
+								continue;
+
 							glm::vec2 pos = this->_position + glm::vec2(8, 8) + glm::vec2(i, j) * 16.0f;
 							tile.setPosition(sf::Vector2f(pos.x, pos.y));
 							tile.setSize(sf::Vector2f(16, 16));
-							State::RegionState& region_state = world_state.getRegion(glm::ivec2(i + interface.getState().position.x, j + interface.getState().position.y));
-							tile.setFillColor(sf::Color(std::min(255, std::max(0, region_state.getProperties().zoffset_00 / 4)), 0, 0, 255));
+							State::RegionState& region_state = world_state.getRegion(glm::ivec2(xx, yy));
+							tile.setFillColor(sf::Color(std::min(255, std::max(0, (region_state.getProperties().zoffset_00 - 500) / 4)), 0, 0, 255));
 							window.getInternal().draw(tile);
 						}
 					}
