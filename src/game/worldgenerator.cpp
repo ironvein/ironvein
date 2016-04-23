@@ -22,10 +22,10 @@ namespace IronVein
 			{
 				for (int j = 0; j < world_state.getSize().y; j ++)
 				{
-					float z_00 = 1000.0f + Util::Generation::ValueNoise2D(i, j,			500.0f, 32.0f, 3, 0.5f);
-					float z_01 = 1000.0f + Util::Generation::ValueNoise2D(i, j + 1,		500.0f, 32.0f, 3, 0.5f);
-					float z_10 = 1000.0f + Util::Generation::ValueNoise2D(i + 1, j,		500.0f, 32.0f, 3, 0.5f);
-					float z_11 = 1000.0f + Util::Generation::ValueNoise2D(i + 1, j + 1,	500.0f, 32.0f, 3, 0.5f);
+					float z_00 = 1000.0f + Util::Generation::ValueNoise2D(i, j,			500.0f, 16.0f, 3, 0.5f);
+					float z_01 = 1000.0f + Util::Generation::ValueNoise2D(i, j + 1,		500.0f, 16.0f, 3, 0.5f);
+					float z_10 = 1000.0f + Util::Generation::ValueNoise2D(i + 1, j,		500.0f, 16.0f, 3, 0.5f);
+					float z_11 = 1000.0f + Util::Generation::ValueNoise2D(i + 1, j + 1,	500.0f, 16.0f, 3, 0.5f);
 
 					State::RegionState& region_state = world_state.getRegion(glm::ivec2(i, j));
 

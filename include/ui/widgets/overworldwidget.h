@@ -19,6 +19,7 @@ namespace IronVein
 			class OverworldWidget : public Widget
 			{
 				glm::vec2 _position = glm::vec2(16, 16);
+				glm::ivec2 _size = glm::ivec2(300, 300);
 				bool _visible = true;
 
 			public:
