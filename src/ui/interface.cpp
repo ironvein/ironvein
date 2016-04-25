@@ -22,7 +22,7 @@ namespace IronVein
 			this->_multiplexer = multiplexer;
 			this->_app_cfg = app_cfg;
 
-			for (int i = 0; i < sf::Keyboard::Key::KeyCount; i ++)
+			for (int i = 0; i <= sf::Keyboard::Key::KeyCount; i ++)
 				this->_key_states.push_back(false);
 
 			// Load default resources
@@ -65,7 +65,8 @@ namespace IronVein
 			{
 			case sf::Event::KeyPressed:
 				{
-					this->_key_states[event.key.code] = true;
+					if (event.key.code != -1)
+						this->_key_states[event.key.code] = true;
 
 					cancel_pass = true;
 					if (event.key.code == sf::Keyboard::Left)
@@ -83,7 +84,8 @@ namespace IronVein
 
 			case sf::Event::KeyReleased:
 				{
-					this->_key_states[event.key.code] = false;
+					if (event.key.code != -1)
+						this->_key_states[event.key.code] = false;
 				}
 				break;
 

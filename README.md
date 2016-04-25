@@ -6,6 +6,8 @@ An empire-building strategy and management game inspired by Dwarf Fortress and O
 
 IronVein is a community project launched in the hope of creating a fun, involved and complex real-time strategy and management empire-building game. Imagine taking Dwarf Fortress, OpenTTD, Minecraft and Age of Empires and mixing them together inside a big vat of digital gloop. Bake the result and then polish it. That's what IronVein aims to be. Despite this, IronVein attempts to explore concepts, mechanics and ideas not previously explored by such games. In that sense, IronVein is not a clone, and does not aim to be a clone.
 
+![alt tag](https://raw.githubusercontent.com/ironvein/ironvein/master/misc/screen0.png "A screenshot of the current testing state of IronVein")
+
 ## Pre-built Binaries
 
 N/A
