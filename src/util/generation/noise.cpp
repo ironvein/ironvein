@@ -15,25 +15,25 @@ namespace IronVein
 				return a + (b - a) * x;
 			}
 
-			float GetRand2D(int x, int y)
+			float GetRand2D(int x, int y, int seed)
 			{
-				return ((((x * 37 - 3472) ^ (y * 73 - 2473)) << 3 + (x ^ y)) % 20000 - 10000) / 10000.0f;
+				return ((((x * 37 - 3472 + seed) ^ (y * 73 - 2473 - seed)) << 3 + (seed ^ x ^ y)) % 20000 - 10000) / 10000.0f;
 			}
 
-			float GetRand3D(int x, int y, int z)
+			float GetRand3D(int x, int y, int z, int seed)
 			{
-				return ((((x * 37 - 3472) ^ (y * 73 - 2473) ^ (z * 53 - 1933)) << 3 + (x ^ y ^ z)) % 20000 - 10000) / 10000.0f;
+				return ((((x * 37 - 3472 + seed) ^ (y * 73 - 2473 - seed) ^ (z * 53 - 1933 + seed)) << 3 + (seed ^ x ^ y ^ z)) % 20000 - 10000) / 10000.0f;
 			}
 
-			float Noise2D(float x, float y)
+			float Noise2D(float x, float y, int seed)
 			{
 				float xoff = fmod(x, 1.0);
 				float yoff = fmod(y, 1.0);
 
-				float v0_00 = GetRand2D((int)x, (int)y);
-				float v0_01 = GetRand2D((int)x, (int)y + 1);
-				float v0_10 = GetRand2D((int)x + 1, (int)y);
-				float v0_11 = GetRand2D((int)x + 1, (int)y + 1);
+				float v0_00 = GetRand2D((int)x, (int)y, seed);
+				float v0_01 = GetRand2D((int)x, (int)y + 1, seed);
+				float v0_10 = GetRand2D((int)x + 1, (int)y, seed);
+				float v0_11 = GetRand2D((int)x + 1, (int)y + 1, seed);
 
 				float v1_0 = Lerp(v0_00, v0_01, yoff);
 				float v1_1 = Lerp(v0_10, v0_11, yoff);
@@ -41,7 +41,7 @@ namespace IronVein
 				return Lerp(v1_0, v1_1, xoff);
 			}
 
-			float Noise3D(float x, float y, float z)
+			float Noise3D(float x, float y, float z, int seed)
 			{
 				x += 3473.0f;
 				y += 3789.0f;
@@ -51,15 +51,15 @@ namespace IronVein
 				float yoff = fmod(y, 1.0);
 				float zoff = fmod(z, 1.0);
 
-				float v0_000 = GetRand3D((int)x, (int)y, (int)z);
-				float v0_001 = GetRand3D((int)x, (int)y, (int)z + 1);
-				float v0_010 = GetRand3D((int)x, (int)y + 1, (int)z);
-				float v0_011 = GetRand3D((int)x, (int)y + 1, (int)z + 1);
+				float v0_000 = GetRand3D((int)x, (int)y, (int)z, seed);
+				float v0_001 = GetRand3D((int)x, (int)y, (int)z + 1, seed);
+				float v0_010 = GetRand3D((int)x, (int)y + 1, (int)z, seed);
+				float v0_011 = GetRand3D((int)x, (int)y + 1, (int)z + 1, seed);
 
-				float v0_100 = GetRand3D((int)x + 1, (int)y, (int)z);
-				float v0_101 = GetRand3D((int)x + 1, (int)y, (int)z + 1);
-				float v0_110 = GetRand3D((int)x + 1, (int)y + 1, (int)z);
-				float v0_111 = GetRand3D((int)x + 1, (int)y + 1, (int)z + 1);
+				float v0_100 = GetRand3D((int)x + 1, (int)y, (int)z, seed);
+				float v0_101 = GetRand3D((int)x + 1, (int)y, (int)z + 1, seed);
+				float v0_110 = GetRand3D((int)x + 1, (int)y + 1, (int)z, seed);
+				float v0_111 = GetRand3D((int)x + 1, (int)y + 1, (int)z + 1, seed);
 
 				float v1_00 = Lerp(v0_000, v0_001, zoff);
 				float v1_01 = Lerp(v0_010, v0_011, zoff);
@@ -72,7 +72,7 @@ namespace IronVein
 				return Lerp(v2_0, v2_1, xoff);
 			}
 
-			float ValueNoise2D(float x, float y, float amplitude, float wavelength, int octaves, float factor)
+			float ValueNoise2D(float x, float y, float amplitude, float wavelength, int octaves, float factor, int seed)
 			{
 				float sum = 0.0f;
 				float range_adjust = 0.0f;
@@ -80,7 +80,7 @@ namespace IronVein
 
 				for(int i = 0; i < octaves; i ++)
 				{
-					sum += temp_amp * Noise2D(x / wavelength, y / wavelength);
+					sum += temp_amp * Noise2D(x / wavelength, y / wavelength, seed);
 					wavelength *= factor;
 					temp_amp *= factor;
 					range_adjust += temp_amp;
@@ -89,7 +89,7 @@ namespace IronVein
 				return amplitude * (sum / range_adjust);
 			}
 
-			float ValueNoise3D(float x, float y, float z, float amplitude, float wavelength, int octaves, float factor)
+			float ValueNoise3D(float x, float y, float z, float amplitude, float wavelength, int octaves, float factor, int seed)
 			{
 				float sum = 0.0f;
 				float range_adjust = 0.0f;
@@ -97,7 +97,7 @@ namespace IronVein
 
 				for(int i = 0; i < octaves; i ++)
 				{
-					sum += temp_amp * Noise3D(x / wavelength, y / wavelength, z / wavelength);
+					sum += temp_amp * Noise3D(x / wavelength, y / wavelength, z / wavelength, seed);
 					wavelength *= factor;
 					temp_amp *= factor;
 					range_adjust += temp_amp;

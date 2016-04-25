@@ -114,7 +114,7 @@ namespace IronVein
 				window.getInternal().draw(chat_text);
 
 				std::vector<std::string> messages = interface.getGameState().lock()->getChatState().getMessages();
-				for (int i = 0; i < messages.size(); i ++)
+				for (int i = 0; i < (int)messages.size(); i ++)
 				{
 					chat_text.setString(messages[messages.size() - i - 1]);
 					chat_text.setPosition(sf::Vector2f(this->_pos.x + 12, this->_pos.y + 24 + i * 12));

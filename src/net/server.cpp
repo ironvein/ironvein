@@ -49,7 +49,7 @@ namespace IronVein
 				Util::output("Player with id '" + std::to_string(new_player.id) + "' and address '" + new_player.socket->getRemoteAddress().toString() + ":" + std::to_string(new_player.socket->getRemotePort()) + "' connected");
 			}
 
-			for (long i = 0; i < this->_player_sockets.size(); i ++)
+			for (long i = 0; i < (long)this->_player_sockets.size(); i ++)
 			{
 				sf::Packet data_packet;
 				sf::Socket::Status status = this->_player_sockets[i].socket->receive(data_packet);
@@ -72,7 +72,7 @@ namespace IronVein
 
 		void Server::passReport(sf::Packet packet, int player_id)
 		{
-			for (long i = 0; i < this->_player_sockets.size(); i ++)
+			for (long i = 0; i < (long)this->_player_sockets.size(); i ++)
 			{
 				if (this->_player_sockets[i].id == player_id)
 				{
@@ -83,7 +83,7 @@ namespace IronVein
 
 		void Server::disconnect(long id)
 		{
-			for (long i = 0; i < this->_player_sockets.size(); i ++)
+			for (long i = 0; i < (long)this->_player_sockets.size(); i ++)
 			{
 				if (this->_player_sockets[i].id == id)
 				{

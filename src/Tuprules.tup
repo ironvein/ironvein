@@ -1,1 +1,0 @@
-INCLUDES=-I$(TUP_CWD)/../include -ISFML/include -IGLM/include

@@ -23,7 +23,7 @@ Create a build environment for IronVein like so:
 
 ```
 mkdir build
-cp tup.config build/.
+cd build
 ```
 
 At this point, edit the file "build/tup.config" depending on your build preferences.
@@ -31,13 +31,14 @@ At this point, edit the file "build/tup.config" depending on your build preferen
 Build IronVein like so:
 
 ```
-tup build
+cmake ..
+make
 ```
 
 Run IronVein like so:
 
 ```
-./build/ironvein
+./ironvein
 ```
 
 ## Inspiration

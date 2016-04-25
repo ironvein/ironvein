@@ -1,3 +1,0 @@
-include_rules
-
-: main.cpp				|> !cpp_obj |>

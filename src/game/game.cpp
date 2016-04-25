@@ -44,7 +44,7 @@ namespace IronVein
 				this->_game_state.lock()->getChatState().addMessage(message);
 
 				std::vector<State::Player> players = this->_game_state.lock()->getPlayerState().getPlayers();
-				for (int i = 0; i < players.size(); i ++)
+				for (int i = 0; i < (int)players.size(); i ++)
 				{
 					sf::Uint64 type = (long)Net::ReportType::CHAT_MESSAGE;
 					sf::Packet new_packet;

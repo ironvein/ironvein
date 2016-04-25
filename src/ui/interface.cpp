@@ -84,7 +84,7 @@ namespace IronVein
 				break;
 			}
 
-			if (!cancel_pass && this->_current_widget >= 0 && this->_current_widget < this->_widgets.size())
+			if (!cancel_pass && this->_current_widget >= 0 && this->_current_widget < (int)this->_widgets.size())
 				this->_widgets[this->_current_widget]->passEvent(event, *this);
 		}
 
@@ -95,7 +95,7 @@ namespace IronVein
 
 		void Interface::tick()
 		{
-			for (int i = 0; i < this->_widgets.size(); i ++)
+			for (int i = 0; i < (int)this->_widgets.size(); i ++)
 			{
 				this->_widgets[i]->tick(*this, this->_current_widget == i);
 			}
@@ -105,7 +105,7 @@ namespace IronVein
 		{
 			this->_renderer.renderToWindow(*this->_game_state.lock(), window);
 
-			for (int i = 0; i < this->_widgets.size(); i ++)
+			for (int i = 0; i < (int)this->_widgets.size(); i ++)
 			{
 				this->_widgets[i]->render(*this, window, this->_current_widget == i);
 			}
