@@ -17,12 +17,12 @@ namespace IronVein
 
 			float GetRand2D(int x, int y, int seed)
 			{
-				return ((((x * 37 - 3472 + seed) ^ (y * 73 - 2473 - seed)) << 3 + (seed ^ x ^ y)) % 20000 - 10000) / 10000.0f;
+				return ((((x * 37 - 3472 + seed) ^ (y * 73 - 2473 - seed)) << (3 + (seed ^ x ^ y))) % 20000 - 10000) / 10000.0f;
 			}
 
 			float GetRand3D(int x, int y, int z, int seed)
 			{
-				return ((((x * 37 - 3472 + seed) ^ (y * 73 - 2473 - seed) ^ (z * 53 - 1933 + seed)) << 3 + (seed ^ x ^ y ^ z)) % 20000 - 10000) / 10000.0f;
+				return ((((x * 37 - 3472 + seed) ^ (y * 73 - 2473 - seed) ^ (z * 53 - 1933 + seed)) << (3 + (seed ^ x ^ y ^ z))) % 20000 - 10000) / 10000.0f;
 			}
 
 			float Noise2D(float x, float y, int seed)

@@ -37,6 +37,8 @@ namespace IronVein
 
 			Renderer _renderer;
 
+			std::vector<bool> _key_states;
+
 		public:
 			Interface();
 			void init(std::weak_ptr<State::GameState> game_state, std::weak_ptr<Net::Multiplexer> multiplexer, App::AppCfg app_cfg);

@@ -22,6 +22,9 @@ namespace IronVein
 			this->_multiplexer = multiplexer;
 			this->_app_cfg = app_cfg;
 
+			for (int i = 0; i < sf::Keyboard::Key::KeyCount; i ++)
+				this->_key_states.push_back(false);
+
 			// Load default resources
 			this->_default_font.loadFromFile(this->_app_cfg.data_directory + "/commodore.ttf");
 
@@ -62,6 +65,8 @@ namespace IronVein
 			{
 			case sf::Event::KeyPressed:
 				{
+					this->_key_states[event.key.code] = true;
+
 					cancel_pass = true;
 					if (event.key.code == sf::Keyboard::Left)
 						this->_state.position.x --;
@@ -73,6 +78,12 @@ namespace IronVein
 						this->_state.position.y ++;
 					else
 						cancel_pass = false;
+				}
+				break;
+
+			case sf::Event::KeyReleased:
+				{
+					this->_key_states[event.key.code] = false;
 				}
 				break;
 
