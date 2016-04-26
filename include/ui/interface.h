@@ -48,6 +48,7 @@ namespace IronVein
 
 			std::weak_ptr<State::GameState> getGameState();
 			InterfaceState& getState();
+			bool getKey(sf::Keyboard::Key key);
 
 			void sendMessage(sf::Packet packet);
 

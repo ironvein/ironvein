@@ -57,28 +57,22 @@ namespace IronVein
 			return this->_state;
 		}
 
+		bool Interface::getKey(sf::Keyboard::Key key)
+		{
+			if (key != -1)
+				return this->_key_states[key];
+			else
+				return false;
+		}
+
 		void Interface::passEvent(sf::Event event)
 		{
-			bool cancel_pass = false;
-
 			switch (event.type)
 			{
 			case sf::Event::KeyPressed:
 				{
 					if (event.key.code != -1)
 						this->_key_states[event.key.code] = true;
-
-					cancel_pass = true;
-					if (event.key.code == sf::Keyboard::Left)
-						this->_state.position.x --;
-					else if (event.key.code == sf::Keyboard::Right)
-						this->_state.position.x ++;
-					else if (event.key.code == sf::Keyboard::Up)
-						this->_state.position.y --;
-					else if (event.key.code == sf::Keyboard::Down)
-						this->_state.position.y ++;
-					else
-						cancel_pass = false;
 				}
 				break;
 
@@ -97,7 +91,7 @@ namespace IronVein
 				break;
 			}
 
-			if (!cancel_pass && this->_current_widget >= 0 && this->_current_widget < (int)this->_widgets.size())
+			if (this->_current_widget >= 0 && this->_current_widget < (int)this->_widgets.size())
 				this->_widgets[this->_current_widget]->passEvent(event, *this);
 		}
 
@@ -108,6 +102,15 @@ namespace IronVein
 
 		void Interface::tick()
 		{
+			if (this->getKey(sf::Keyboard::Key::Left))
+				this->_state.position.x --;
+			if (this->getKey(sf::Keyboard::Key::Right))
+				this->_state.position.x ++;
+			if (this->getKey(sf::Keyboard::Key::Up))
+				this->_state.position.y --;
+			if (this->getKey(sf::Keyboard::Key::Down))
+				this->_state.position.y ++;
+
 			for (int i = 0; i < (int)this->_widgets.size(); i ++)
 			{
 				this->_widgets[i]->tick(*this, this->_current_widget == i);

@@ -135,6 +135,8 @@ namespace IronVein
 
 				if (this->_app_cfg.mode == AppMode::LOCAL || this->_app_cfg.mode == AppMode::CLIENT)
 				{
+					this->_interface->tick();
+					
 					this->_interface->render(this->_main_window);
 					this->_main_window.update();
 				}
