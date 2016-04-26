@@ -40,6 +40,8 @@ namespace IronVein
 			void init();
 
 			RegionProperties& getProperties();
+			bool load();
+			bool unload();
 		};
 	}
 }

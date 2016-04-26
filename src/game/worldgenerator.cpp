@@ -38,5 +38,10 @@ namespace IronVein
 
 			Util::output("Generated overworld");
 		}
+
+		void GenerateRegion(State::RegionState& region_state)
+		{
+			Util::output("Generating region");
+		}
 	}
 }

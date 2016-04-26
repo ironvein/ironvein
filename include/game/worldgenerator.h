@@ -10,6 +10,7 @@ namespace IronVein
 	{
 		void GenerateWorld(State::GameState& game_state);
 		void GenerateOverworld(State::WorldState& world_state);
+		void GenerateRegion(State::RegionState& region_state);
 	}
 }
 
